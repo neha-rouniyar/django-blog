@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Form</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class="form-container">
+    <h2>Add Product</h2>
+    <form method="post" action="{% url 'add_product' %}">
+        {% csrf_token %}
+      <div class="form-group">
+        <label for="product-name">Product Name</label>
+        <input type="text" id="product-name" name="product-name" placeholder="Enter product name" >
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Enter product description" rows="4" ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" placeholder="Enter product price" >
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" name="category" >
+          <option value="">Select a category</option>
+          <option value="electronics">Electronics</option>
+          <option value="fashion">Fashion</option>
+          <option value="groceries">Groceries</option>
+          <option value="books">Books</option>
+        </select>
+      </div>
+        {% if error %}
+        <div style="color: red;">{{ error }}</div>
+    {% endif %}
+      <button type="submit" class="submit-button">Add Product</button>
+    </form>
+  </div>
+</body>
+</html>

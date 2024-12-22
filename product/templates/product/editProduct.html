@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Form</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class="form-container">
+    <h2>Update Product</h2>
+    <form method="post" action="{% url 'update_product' product.id %}">
+        {% csrf_token %}
+      <div class="form-group">
+        <label for="product-name">Product Name</label>
+        <input type="text" id="product-name" name="product-name" value="{{product.name}}" placeholder="Enter product name" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Enter product description" rows="4" required>{{product.description}}</textarea>
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" value="{{product.price}}" placeholder="Enter product price" required>
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="">Select a category</option>
+          <option value="electronics">Electronics</option>
+          <option value="fashion">Fashion</option>
+          <option value="groceries">Groceries</option>
+          <option value="books">Books</option>
+        </select>
+      </div>
+      <button type="submit" class="submit-button">Update Product</button>
+    </form>
+  </div>
+</body>
+</html>

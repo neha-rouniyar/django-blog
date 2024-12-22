@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <style>
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .add-product-button {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .add-product-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="products-container">
+    <div class="header">
+      <h2>All Products List</h2>
+      <a href="{% url 'productForm' %}" class="add-product-button">Add Product</a>
+    </div>
+    {% for product in products %}
+    <div class="product-card">
+      <div class="product-details">
+        <h3><strong>Product Name: </strong>{{ product.name }}</h3>
+        <p><strong>Product Id : </strong> {{ product.id }}</p>
+        <p><strong>Description:</strong> {{ product.description }}</p>
+        <p><strong>Price:</strong> {{ product.price }}</p>
+        <p><strong>Category:</strong> {{ product.category }}</p>
+      </div>
+      <div class="action-buttons">
+          <div class="row">
+           <a href="{% url 'edit_product' product.id %}"><button class="edit-button">Edit</button></a> 
+           <a href="{% url 'delete_product' product.id %}"><button class="delete-button">Delete</button></a> 
+        </div>
+    </div>
+    </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
