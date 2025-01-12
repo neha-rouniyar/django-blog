@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category-wise To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="todo-container">
+        <h1>Category-wise To-Do List</h1>
+        <form class="todo-form" id="todo-form">
+            <input 
+                type="text" 
+                id="task-input" 
+                name="task" 
+                placeholder="Enter your task..." 
+                required>
+            <select id="category" name="category" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="shopping">Shopping</option>
+                <option value="others">Others</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+        <div class="category-container">
+            <h2>Tasks by Category</h2>
+            <ul id="work-tasks" class="task-list">
+                <h3>Work</h3>
+            </ul>
+            <ul id="personal-tasks" class="task-list">
+                <h3>Personal</h3>
+            </ul>
+            <ul id="shopping-tasks" class="task-list">
+                <h3>Shopping</h3>
+            </ul>
+            <ul id="others-tasks" class="task-list">
+                <h3>Others</h3>
+            </ul>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
