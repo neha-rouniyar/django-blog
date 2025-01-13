@@ -4,11 +4,56 @@ from rest_framework.response import Response
 from rest_framework import status
 from todolist.models import Todo
 from todolist.serializers import TodoSerializer
-
-
+from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView,GenericAPIView
+from rest_framework.generics import mixins
+from rest_framework.viewsets import ModelViewSet
 def getlist(request):
     return render(request,'baseFile.html')
 
+
+
+# # APIs using ViewSet and DEfault Router configuration **********************************************************************************************************************************
+class TodoViewSet(ModelViewSet):
+    queryset=Todo.objects.all()
+    serializer_class=TodoSerializer
+
+
+# # APIs using mixins **********************************************************************************************************************************
+class TodoMixinsView(
+    GenericAPIView,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin
+    ):
+    queryset=Todo.objects.all()
+    serializer_class=TodoSerializer
+    def get(self,request,*args,**kwargs):
+        if 'pk' in kwargs:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request)
+
+    def post(self,request):
+        return self.create(request)
+    
+    def put(self,request,*args,**kwargs):
+        return self.update(request,*args,**kwargs)
+    
+    def delete(self,request,*args,**kwargs):
+        return self.destroy(request,*args,**kwargs)
+
+
+
+# # APIs using Generic views **********************************************************************************************************************************
+class TodoListCreateGenericView(ListCreateAPIView):
+    queryset=Todo.objects.all()
+    serializer_class=TodoSerializer
+
+
+class TodoRetrieveUpdateDestroyGenericAPIView(RetrieveUpdateDestroyAPIView):
+    queryset=Todo.objects.all()
+    serializer_class=TodoSerializer
 
 
 # # APIs using APIView **********************************************************************************************************************************
@@ -74,3 +119,7 @@ class TodoDetailAPIView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         todo.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+
+
