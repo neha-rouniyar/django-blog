@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'product',
     'userapp',
     'rest_framework',
-    'todolist'
+    'todolist',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'todo/static']
 
+# settings.py
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -134,3 +139,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # LOGIN_URL = '/login'
 # LOGIN_REDIRECT_URL = '/view-blogs'
 # LOGOUT_REDIRECT_URL = '/login'
+
+
+# this is for mixins, generics and viewset for including pagination using PageNumberPagination,LimitOffsetPagination
+REST_FRAMEWORK = {
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 5,  # Number of items per page
+}
