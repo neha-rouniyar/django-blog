@@ -11,6 +11,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.pagination import PageNumberPagination,LimitOffsetPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import TodoFilter
+from rest_framework.filters import SearchFilter
 def getlist(request):
     return render(request,'baseFile.html')
 
@@ -57,8 +58,9 @@ class TodoMixinsView(
 class TodoListCreateGenericView(ListCreateAPIView):
     queryset=Todo.objects.all()
     serializer_class=TodoSerializer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend,SearchFilter]
     filterset_class = TodoFilter 
+    search_fields=['title','description']
 
 
 class TodoRetrieveUpdateDestroyGenericAPIView(RetrieveUpdateDestroyAPIView):
@@ -75,12 +77,12 @@ class TodoAPIView(APIView):
 
 
         # # this code while including pagination - PageNumberPagination
-        # todoList = Todo.objects.all()
-        # paginator = PageNumberPagination()
-        # paginator.page_size = 5  
-        # result = paginator.paginate_queryset(todoList, request)
-        # serializer = TodoSerializer(result, many=True)
-        # return paginator.get_paginated_response(serializer.data)
+        todoList = Todo.objects.all()
+        paginator = PageNumberPagination()
+        paginator.page_size = 5  
+        result = paginator.paginate_queryset(todoList, request)
+        serializer = TodoSerializer(result, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
 
         # # this code while including pagination - LimitOffsetPagination
@@ -92,13 +94,13 @@ class TodoAPIView(APIView):
         # return paginator.get_paginated_response(serializer.data)
     
         # # pagination along with filter for completed=True/False
-        todoList = Todo.objects.all()
-        todoList=TodoFilter(request.query_params,queryset=todoList).qs
-        paginator = LimitOffsetPagination()
-        paginator.default_limit = 5  
-        result = paginator.paginate_queryset(todoList, request)
-        serializer = TodoSerializer(result, many=True)
-        return paginator.get_paginated_response(serializer.data)
+        # todoList = Todo.objects.all()
+        # todoList=TodoFilter(request.query_params,queryset=todoList).qs
+        # paginator = LimitOffsetPagination()
+        # paginator.default_limit = 5  
+        # result = paginator.paginate_queryset(todoList, request)
+        # serializer = TodoSerializer(result, many=True)
+        # return paginator.get_paginated_response(serializer.data)
     
     def post(self,request):
         serializer = TodoSerializer(data=request.data)
